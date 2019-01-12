@@ -21,6 +21,7 @@ settings =
 		usesPermissions =
 		{
 			"android.permission.INTERNET",
+			"android.permission.VIBRATE",
 		},
 	},
 
@@ -40,9 +41,8 @@ settings =
 	--
 	-- Plugins section
 	--
-	plugins =
-	{
-
+	plugins = {
+			['plugin.toast'] = {publisherId = 'com.spiralcodestudio'}
 	},
 
 	--
