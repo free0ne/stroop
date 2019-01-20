@@ -57,6 +57,7 @@ function scene:create( event )
   local colorButton = {2/255, 218/255, 197/255}
   local offColorButton = {1, 1, 1, 1}
   local startGameRectColor = {55/255, 0/255, 179/255}
+  local fontSize = 33
   display.setDefault( "background", unpack( bgcolor ) )
 
   local font = "geometos.ttf"
@@ -67,28 +68,28 @@ function scene:create( event )
   label:setFillColor( unpack(labeltextcolor) )
 
   local function goToGame1( event )
-      composer.gotoScene( "mode1" )
+      composer.gotoScene( "mode1starter" )
   end
 
   local bgRect = display.newRect( sceneGroup, display.contentCenterX, display.contentCenterY + 50, display.contentWidth-100, 630 )
   bgRect:setFillColor( 1, 1 ,1 )
 
-  local mode1Rect = display.newRect( sceneGroup, display.contentCenterX, display.contentCenterY - 150, display.contentWidth-140, 130 )
+  local mode1Rect = display.newRect( sceneGroup, display.contentCenterX, display.contentCenterY - 150, display.contentWidth-180, 130 )
   mode1Rect:setFillColor( unpack (colorButton) )
   mode1Rect:addEventListener( "tap", goToGame1 )
-  local mode1Label = display.newText( sceneGroup, "определение\nцветов", display.contentCenterX, display.contentCenterY - 150, font, 40 )
+  local mode1Label = display.newText( sceneGroup, "определение\nцветов", display.contentCenterX, display.contentCenterY - 150, font, fontSize )
   mode1Label:setFillColor( unpack(labeltextcolor) )
 
-  local mode2Rect = display.newRect( sceneGroup, display.contentCenterX, display.contentCenterY + 50, display.contentWidth-140, 130 )
+  local mode2Rect = display.newRect( sceneGroup, display.contentCenterX, display.contentCenterY + 50, display.contentWidth-180, 130 )
   mode2Rect:setFillColor( unpack (colorButton) )
   mode2Rect:addEventListener( "tap", goToGame1 )
-  local mode2Label = display.newText( sceneGroup, "прочтение\nслов", display.contentCenterX - 32, display.contentCenterY + 50, font, 40 )
+  local mode2Label = display.newText( sceneGroup, "прочтение\nслов", display.contentCenterX - 32, display.contentCenterY + 50, font, fontSize )
   mode2Label:setFillColor( unpack(labeltextcolor) )
 
-  local mode3Rect = display.newRect( sceneGroup, display.contentCenterX, display.contentCenterY + 250, display.contentWidth-140, 130 )
+  local mode3Rect = display.newRect( sceneGroup, display.contentCenterX, display.contentCenterY + 250, display.contentWidth-180, 130 )
   mode3Rect:setFillColor( unpack (colorButton) )
   mode3Rect:addEventListener( "tap", goToGame1 )
-  local mode3Label = display.newText( sceneGroup, "смешанный\nтест", display.contentCenterX - 14, display.contentCenterY + 250, font, 40 )
+  local mode3Label = display.newText( sceneGroup, "смешанный\nтест", display.contentCenterX - 14, display.contentCenterY + 250, font, fontSize )
   mode3Label:setFillColor( unpack(labeltextcolor) )
 
 
@@ -134,13 +135,15 @@ function scene:hide( event )
 	local sceneGroup = self.view
 	local phase = event.phase
 
+
 	if ( phase == "will" ) then
 		-- Code here runs when the scene is on screen (but is about to go off screen)
-
+        Runtime:removeEventListener( "key", onKeyEvent )
+        --print("menuhidewill")
 	elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen
-    Runtime:removeEventListener( "key", onKeyEvent )
-    composer.removeScene( "menu" )
+        --print("menuhidedid")
+        composer.removeScene( "menu" )
 	end
 end
 
