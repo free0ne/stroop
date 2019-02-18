@@ -17,6 +17,18 @@ local function backTimer( event )
     firstback = true
 end
 
+local function goToGame1( event )
+    composer.gotoScene( "mode1starter" )
+end
+
+local function goToGame2( event )
+    composer.gotoScene( "mode2starter" )
+end
+
+local function goToGame3( event )
+    composer.gotoScene( "mode3starter" )
+end
+
 -- Called when a key event has been received
 local function onKeyEvent( event )
   -- If the "back" key was pressed on Android, prevent it from backing out of the app
@@ -67,10 +79,6 @@ function scene:create( event )
   local label = display.newText( sceneGroup, "Stroop effect", display.contentCenterX, 65, font, 48 )
   label:setFillColor( unpack(labeltextcolor) )
 
-  local function goToGame1( event )
-      composer.gotoScene( "mode1starter" )
-  end
-
   local bgRect = display.newRect( sceneGroup, display.contentCenterX, display.contentCenterY + 50, display.contentWidth-100, 630 )
   bgRect:setFillColor( 1, 1 ,1 )
 
@@ -82,33 +90,15 @@ function scene:create( event )
 
   local mode2Rect = display.newRect( sceneGroup, display.contentCenterX, display.contentCenterY + 50, display.contentWidth-180, 130 )
   mode2Rect:setFillColor( unpack (colorButton) )
-  mode2Rect:addEventListener( "tap", goToGame1 )
+  mode2Rect:addEventListener( "tap", goToGame2 )
   local mode2Label = display.newText( sceneGroup, "прочтение\nслов", display.contentCenterX - 32, display.contentCenterY + 50, font, fontSize )
   mode2Label:setFillColor( unpack(labeltextcolor) )
 
   local mode3Rect = display.newRect( sceneGroup, display.contentCenterX, display.contentCenterY + 250, display.contentWidth-180, 130 )
   mode3Rect:setFillColor( unpack (colorButton) )
-  mode3Rect:addEventListener( "tap", goToGame1 )
-  local mode3Label = display.newText( sceneGroup, "смешанный\nтест", display.contentCenterX - 14, display.contentCenterY + 250, font, fontSize )
+  mode3Rect:addEventListener( "tap", goToGame3 )
+  local mode3Label = display.newText( sceneGroup, "смешанные\nтесты", display.contentCenterX - 14, display.contentCenterY + 250, font, fontSize )
   mode3Label:setFillColor( unpack(labeltextcolor) )
-
-
-
-
-  --[[local startGameRect = display.newRect( sceneGroup, display.contentCenterX, display.contentHeight - 65, display.contentWidth, 130 )
-  startGameRect:setFillColor( unpack (startGameRectColor) )
-  startGameRect:addEventListener( "tap", goToGame )
-  local startGameLabel = display.newText( sceneGroup, "начать", display.contentCenterX, display.contentHeight - 65, font, 40 )
-  startGameLabel:setFillColor( unpack(labeltextcolor) ) ]]--
-
-  --[[local o = system.orientation
-  local orient = display.newText( sceneGroup, o, display.contentCenterX, 200, native.systemFont, 46 )
-  orient:setFillColor( unpack(textcolor) )
-
-  local function onOrientationChange(e)
-    orient.text = e.type
-  end
-  Runtime:addEventListener("orientation", onOrientationChange)   ]]--
 
 end
 

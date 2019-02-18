@@ -43,6 +43,10 @@ local countLabel
 local timerText
 local timerRect
 local countDownTimer
+local nameImg
+local nameCircle
+local clrImg
+local clrCircle
 
 --timer
 local basetime = 25.0
@@ -75,7 +79,7 @@ local goToMenu
 --SCORES
 local json = require( "json" )
 local scoresTable = {}
-local filePath = system.pathForFile( "coloredscores.json", system.DocumentsDirectory )
+local filePath = system.pathForFile( "random.json", system.DocumentsDirectory )
 local loadScores
 local saveScores
 
@@ -192,7 +196,70 @@ local function checkBlackAnswers(newValue, iteration)
         end
     end
 end
-local function newAnswers(theanswer)
+local function newAnswersWorded(theanswer)
+    local type = math.random(99)
+    correct = math.random(4)-1
+    repeat
+        incorrect = math.random(4)-1
+    until( incorrect ~= correct )
+    --print( type )
+    --print( "correct "..correct )
+    --print( "incorrect "..incorrect )
+    --print( "theanswer "..theanswer )
+    if type < 49 then --answersBlack
+        for i = 0, 3 do
+            if i == correct then
+                answersBlackArray[i] = colors[theanswer][1]
+            elseif i == incorrect then
+                answersBlackArray[i] = colors[colornum][1] --//
+            else
+                local newval
+                repeat
+                    newval = math.random(11)
+                    answersBlackArray[i] = colors[newval][1]
+                until( checkBlackAnswers(newval, i) )
+            end
+        end
+        return {1, answersBlackArray}
+    elseif type < 80 then
+        for i = 0, 3 do
+            if i == correct then
+                answersBlackArray[i] = colors[theanswer][1]
+                answersColoredArray[i] = theanswer
+            elseif i == incorrect then
+                answersBlackArray[i] = colors[colornum][1] --//
+                answersColoredArray[i] = colornum --//
+            else
+                local newval
+                repeat
+                    newval = math.random(11)
+                    answersBlackArray[i] = colors[newval][1]
+                until( checkBlackAnswers(newval, i) )
+                answersColoredArray[i] = newval
+            end
+        end
+        return {2, answersColoredArray}
+    elseif type < 100 then
+        for i = 0, 3 do
+            if i == correct then
+                answersBlackArray[i] = colors[theanswer][1]
+                answersTabbedArray[i] = theanswer
+            elseif i == incorrect then
+                answersBlackArray[i] = colors[colornum][1] --//
+                answersTabbedArray[i] = colornum --//
+            else
+                local newval
+                repeat
+                    newval = math.random(11)
+                    answersBlackArray[i] = colors[newval][1]
+                until( checkBlackAnswers(newval, i) )
+                answersTabbedArray[i] = newval
+            end
+        end
+        return {3, answersTabbedArray}
+    end
+end
+local function newAnswersColored(theanswer)
     local type = math.random(99)
     correct = math.random(4)-1
     repeat
@@ -263,8 +330,20 @@ local function createNewTask()
     local nameid = newtask[1]
     local clrid = newtask[2] --task
     --print ("clrid "..clrid )
-    local newAnswerArray = newAnswers(clrid)
-
+    local newAnswerArray
+    if math.random() < 0.5 then
+        newAnswerArray = newAnswersColored(clrid)
+        nameCircle.isVisible = false
+        nameImg.isVisible = false
+        clrCircle.isVisible = true
+        clrImg.isVisible = true
+    else
+        newAnswerArray = newAnswersWorded(nameid)
+        nameCircle.isVisible = true
+        nameImg.isVisible = true
+        clrCircle.isVisible = false
+        clrImg.isVisible = false
+    end
     if lvl == 1 then
         --print ("lv1" )
         nametask = colors[nameid][1]
@@ -336,6 +415,10 @@ local function gameover(taskLabel, taskLabel2, countLabel, timerText, schtrafLab
     taskLabel2:removeSelf()
     countLabel:removeSelf()
     timerText:removeSelf()
+    nameImg:removeSelf()
+    clrImg:removeSelf()
+    nameCircle:removeSelf()
+    clrCircle:removeSelf()
     schtrafLabel:removeSelf()
     for i = 0,3 do
         answersBlack[i]:removeSelf()
@@ -504,8 +587,8 @@ local function setField()
     lvl = 0
     corrects = 0
     total = 0
-	taskLabel2 = display.newText( sceneGroup, "", display.contentCenterX+3, display.contentCenterY - 297, font, taskFontSize )
-	taskLabel = display.newText( sceneGroup, "", display.contentCenterX, display.contentCenterY - 300, font, taskFontSize )
+	taskLabel2 = display.newText( sceneGroup, "", display.contentCenterX+3, display.contentCenterY - 257, font, taskFontSize )
+	taskLabel = display.newText( sceneGroup, "", display.contentCenterX, display.contentCenterY - 260, font, taskFontSize )
 	schtrafLabel = display.newText( sceneGroup, "-1.25", 450, 90, font, timerFontSize+4 )
 	schtrafLabel:setFillColor( 1, 0, 0, 0.0 )
 	timerRect = display.newRect( sceneGroup, 0, 10, display.contentWidth*2, 20 )
@@ -514,6 +597,32 @@ local function setField()
 	countLabel:setFillColor( 0, 0, 0 )
     timerText = display.newText( "25.0", 460, 50, font, timerFontSize )
     timerText:setFillColor( unpack(textcolor) )
+    local paintClr = {
+        type = "gradient",
+        color1 = { 176/255, 77/255,160/255,1 },
+        color2 = { 227/255, 217/255, 218/255, 1 },--    { 43/255, 122/255, 165/255, 1 },
+        direction = "down"
+    }
+    local paintName = {
+        type = "gradient",
+        color1 = { 43/255, 122/255, 165/255, 1 },
+        color2 = { 226/255, 252/255, 241/255, 1 },
+        direction = "down"
+    }
+    clrCircle = display.newCircle( sceneGroup,display.contentCenterX-70, 120, 45 )
+    clrCircle.fill = paintClr
+    clrImg = display.newImage( sceneGroup, "palette.png", display.contentCenterX-70, 120 )
+    clrImg:scale(0.9, 0.9)
+    clrImg:setFillColor( 0, 0.6 )
+    clrCircle.isVisible = false
+    clrImg.isVisible = false
+    nameCircle = display.newCircle( sceneGroup,display.contentCenterX+70, 120, 45 )
+    nameCircle.fill = paintName
+    nameImg = display.newImage( sceneGroup, "word.png", display.contentCenterX+70, 120 )
+    nameImg:scale(0.9, 0.9)
+    nameImg:setFillColor( 0, 0.6 )
+    nameCircle.isVisible = false
+    nameImg.isVisible = false
     countDownTimer = timer.performWithDelay( 30, function() updateCountDown(timerRect, timerText, countDownTimer) end, 0 )
 
 	for i = 0,3 do
@@ -622,7 +731,7 @@ function scene:hide( event )
 		--	timer.cancel( countDownTimer )
 		--end
 
-		composer.removeScene( "mode1" )
+		composer.removeScene( "mode4" )
 	end
 end
 

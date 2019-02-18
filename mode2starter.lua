@@ -53,7 +53,7 @@ Runtime:addEventListener( "key", onKeyEvent )
 
 local function gameStart( event )
 	Runtime:removeEventListener( "key", onKeyEvent )
-	composer.gotoScene( "mode1" )
+	composer.gotoScene( "mode2" )
 end
 
 local function toMenu( event )
@@ -68,8 +68,8 @@ function scene:create( event )
 	startGame:setFillColor( unpack (colorButton) )
 	startGame:addEventListener( "tap", gameStart )
 	local tutorialLabel = display.newText( sceneGroup,
-    	"в данном режиме нужно определить, какого цвета слова, указанные в задании, и выбрать соответствующий вариант ответа\n\nвремя: 25 сек\nштраф: -1.25 сек",
-    	display.contentCenterX, display.contentCenterY-40, display.contentWidth-120, 550, font, 35 )
+    	"в данном режиме нужно читать слова, указанные в задании, и выбрать цвета, которые они обозначают\n\nвремя: 25 сек\nштраф: -1.25 сек",
+    	display.contentCenterX, display.contentCenterY+15, display.contentWidth-120, 550, font, 35 )
 	tutorialLabel:setFillColor( unpack(textcolor) )
 	local startLabel = display.newText( sceneGroup, "ок, поехали!", display.contentCenterX, display.contentCenterY + 370, font, 40 )
 	startLabel:setFillColor( unpack(labeltextcolor) )
@@ -113,7 +113,7 @@ function scene:hide( event )
 	elseif ( phase == "did" ) then
 		-- Code here runs immediately after the scene goes entirely off screen
 		--print("mode1starterdid")
-		composer.removeScene( "mode1starter" )
+		composer.removeScene( "mode2starter" )
 	end
 end
 

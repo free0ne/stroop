@@ -75,7 +75,7 @@ local goToMenu
 --SCORES
 local json = require( "json" )
 local scoresTable = {}
-local filePath = system.pathForFile( "coloredscores.json", system.DocumentsDirectory )
+local filePath = system.pathForFile( "namescores.json", system.DocumentsDirectory )
 local loadScores
 local saveScores
 
@@ -207,7 +207,7 @@ local function newAnswers(theanswer)
             if i == correct then
                 answersBlackArray[i] = colors[theanswer][1]
             elseif i == incorrect then
-                answersBlackArray[i] = colors[namenum][1]
+                answersBlackArray[i] = colors[colornum][1] --//
             else
                 local newval
                 repeat
@@ -223,8 +223,8 @@ local function newAnswers(theanswer)
                 answersBlackArray[i] = colors[theanswer][1]
                 answersColoredArray[i] = theanswer
             elseif i == incorrect then
-                answersBlackArray[i] = colors[namenum][1]
-                answersColoredArray[i] = namenum
+                answersBlackArray[i] = colors[colornum][1] --//
+                answersColoredArray[i] = colornum --//
             else
                 local newval
                 repeat
@@ -241,8 +241,8 @@ local function newAnswers(theanswer)
                 answersBlackArray[i] = colors[theanswer][1]
                 answersTabbedArray[i] = theanswer
             elseif i == incorrect then
-                answersBlackArray[i] = colors[namenum][1]
-                answersTabbedArray[i] = namenum
+                answersBlackArray[i] = colors[colornum][1] --//
+                answersTabbedArray[i] = colornum --//
             else
                 local newval
                 repeat
@@ -263,7 +263,7 @@ local function createNewTask()
     local nameid = newtask[1]
     local clrid = newtask[2] --task
     --print ("clrid "..clrid )
-    local newAnswerArray = newAnswers(clrid)
+    local newAnswerArray = newAnswers(nameid)  --//
 
     if lvl == 1 then
         --print ("lv1" )
@@ -622,7 +622,7 @@ function scene:hide( event )
 		--	timer.cancel( countDownTimer )
 		--end
 
-		composer.removeScene( "mode1" )
+		composer.removeScene( "mode2" )
 	end
 end
 
