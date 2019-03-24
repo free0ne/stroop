@@ -16,7 +16,7 @@ local textcolor = {0, 0, 0}
 local outlinecolor = {0, 0, 0, 0.4}
 local correctcolor = {46/255, 139/255, 87/255}
 local wrongcolor = {220/255, 20/255, 60/255}
-local font = "geometos.ttf"
+local font = "altridge.ttf"
 local colors = require("colors")
 local answersColored = {}
 local answersColoredArray = {}
@@ -50,10 +50,10 @@ local countLabel
 local timerText
 local timerRect
 local countDownTimer
-local nameImg
-local nameCircle
-local clrImg
-local clrCircle
+local nameImgTask
+local clrImgTask
+local nameImgAnswers
+local clrImgAnswers
 
 --timer
 local basetime = 25.0
@@ -284,9 +284,35 @@ local function createNewTask()
     newAnswerArray = newAnswers()
     local answColors = newAnswerArray[2]
     local answWords = newAnswerArray[3]
-    --nameCircle.isVisible = false
+    --print("newAnswerArray[1] = "..newAnswerArray[1])
+    local newX1 = math.random(100, 440)
+    local newX2 = math.random(100, 440)
+    nameImgTask.x = newX1
+    clrImgTask.x = newX1
+    nameImgAnswers.x = newX2
+    clrImgAnswers.x = newX2
+    if newAnswerArray[1] == 0 then
+        nameImgTask.isVisible = false
+        clrImgTask.isVisible = true
+        nameImgAnswers.isVisible = false
+        clrImgAnswers.isVisible = true
+    elseif newAnswerArray[1] == 1 then
+        nameImgTask.isVisible = false
+        clrImgTask.isVisible = true
+        nameImgAnswers.isVisible = true
+        clrImgAnswers.isVisible = false
+    elseif newAnswerArray[1] == 2 then
+        nameImgTask.isVisible = true
+        clrImgTask.isVisible = false
+        nameImgAnswers.isVisible = false
+        clrImgAnswers.isVisible = true
+    elseif newAnswerArray[1] == 3 then
+        nameImgTask.isVisible = true
+        clrImgTask.isVisible = false
+        nameImgAnswers.isVisible = true
+        clrImgAnswers.isVisible = false
+    end
     --nameImg.isVisible = false
-    --clrCircle.isVisible = true
     --clrImg.isVisible = true
     if lvl == 1 then
         --print ("lv1" )
@@ -323,10 +349,10 @@ local function gameover(taskLabel, taskLabel2, countLabel, timerText, schtrafLab
     devider2:removeSelf()
     devider3:removeSelf()
     timerText:removeSelf()
-    nameImg:removeSelf()
-    clrImg:removeSelf()
-    nameCircle:removeSelf()
-    clrCircle:removeSelf()
+    nameImgTask:removeSelf()
+    clrImgTask:removeSelf()
+    nameImgAnswers:removeSelf()
+    clrImgAnswers:removeSelf()
     schtrafLabel:removeSelf()
     for i = 0,3 do
         answersColored[i]:removeSelf()
@@ -343,15 +369,15 @@ local function showGOTable()
     saveScores()
     composer.setVariable( "scoresTable", scoresTable )
 
-    gameOverLabel1 = display.newText( sceneGroup, "game", display.contentCenterX, 210, font, 70 )
+    gameOverLabel1 = display.newText( sceneGroup, "GAME", display.contentCenterX, 210, font, 70 )
     gameOverLabel1:setFillColor( 0, 0, 0, 1.0 )
-    gameOverLabel2 = display.newText( sceneGroup, "over", display.contentCenterX, 290, font, 70 )
+    gameOverLabel2 = display.newText( sceneGroup, "OVER", display.contentCenterX, 290, font, 70 )
     gameOverLabel2:setFillColor( 0, 0, 0, 1.0 )
-    gameOverCurr1 = display.newText( sceneGroup, "счет", display.contentCenterX, 430, font, 52 )
+    gameOverCurr1 = display.newText( sceneGroup, "СЧЁТ", display.contentCenterX, 430, font, 52 )
     gameOverCurr1:setFillColor( 0, 0, 0, 1.0 )
     gameOverCurr2 = display.newText( sceneGroup, corrects.." из "..total, display.contentCenterX, 500, font, 52 )
     gameOverCurr2:setFillColor( 0, 0, 0, 1.0 )
-    gameOverHighScore1 = display.newText( sceneGroup, "рекорд", display.contentCenterX, 620, font, 52 )
+    gameOverHighScore1 = display.newText( sceneGroup, "РЕКОРД", display.contentCenterX, 620, font, 52 )
     gameOverHighScore1:setFillColor( 0, 0, 0, 1.0 )
     gameOverHighScore2 = display.newText( sceneGroup, scoresTable[1][1], display.contentCenterX, 690, font, 52 )
     gameOverHighScore2:setFillColor( 0, 0, 0, 1.0 )
@@ -462,7 +488,6 @@ local function setField()
     lvl = 0
     corrects = 0
     total = 0
-    --answersRect = display.newRect( sceneGroup, display.contentCenterX, 610, 480, 470 )
     answersRect = display.newRect( sceneGroup, display.contentCenterX, 350, 400, 1 )
     answersRect:setFillColor( unpack( bgcolor ) )
     answersRect.strokeWidth = 2
@@ -501,20 +526,22 @@ local function setField()
         color2 = { 226/255, 252/255, 241/255, 1 },
         direction = "down"
     }
-    clrCircle = display.newCircle( sceneGroup,display.contentCenterX-70, 120, 45 )
-    clrCircle.fill = paintClr
-    clrImg = display.newImage( sceneGroup, "palette.png", display.contentCenterX-70, 120 )
-    clrImg:scale(0.9, 0.9)
-    clrImg:setFillColor( 0, 0.6 )
-    clrCircle.isVisible = false
-    clrImg.isVisible = false
-    nameCircle = display.newCircle( sceneGroup,display.contentCenterX+70, 120, 45 )
-    nameCircle.fill = paintName
-    nameImg = display.newImage( sceneGroup, "word.png", display.contentCenterX+70, 120 )
-    nameImg:scale(0.9, 0.9)
-    nameImg:setFillColor( 0, 0.6 )
-    nameCircle.isVisible = false
-    nameImg.isVisible = false
+    clrImgTask = display.newImage( sceneGroup, "palette.png", display.contentCenterX-70, 300 )
+    clrImgTask:scale(0.7, 0.7)
+    clrImgTask:setFillColor( 0, 1 )
+    clrImgTask.isVisible = false
+    nameImgTask = display.newImage( sceneGroup, "word.png", display.contentCenterX+70, 300 )
+    nameImgTask:scale(0.7, 0.7)
+    nameImgTask:setFillColor( 0, 1 )
+    nameImgTask.isVisible = false
+    clrImgAnswers = display.newImage( sceneGroup, "palette.png", display.contentCenterX-70, 400 )
+    clrImgAnswers:scale(0.7, 0.7)
+    clrImgAnswers:setFillColor( 0, 1 )
+    clrImgAnswers.isVisible = false
+    nameImgAnswers = display.newImage( sceneGroup, "word.png", display.contentCenterX+70, 400 )
+    nameImgAnswers:scale(0.7, 0.7)
+    nameImgAnswers:setFillColor( 0, 1 )
+    nameImgAnswers.isVisible = false
     countDownTimer = timer.performWithDelay( 30, function() updateCountDown(timerRect, timerText, countDownTimer) end, 0 )
 
 	for i = 0,3 do

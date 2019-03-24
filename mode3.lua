@@ -15,7 +15,7 @@ local textcolor = {0, 0, 0}
 local outlinecolor = {0, 0, 0, 0.4}
 local correctcolor = {46/255, 139/255, 87/255}
 local wrongcolor = {220/255, 20/255, 60/255}
-local font = "geometos.ttf"
+local font = "altridge.ttf"
 local colors = require("colors")
 local answersBlack = {}
 local answersBlackArray = {}
@@ -44,9 +44,7 @@ local timerText
 local timerRect
 local countDownTimer
 local nameImg
-local nameCircle
 local clrImg
-local clrCircle
 
 --timer
 local basetime = 25.0
@@ -333,15 +331,11 @@ local function createNewTask()
     local newAnswerArray
     if (lvl % 2) == 1 then
         newAnswerArray = newAnswersColored(clrid)
-        nameCircle.isVisible = false
         nameImg.isVisible = false
-        clrCircle.isVisible = true
         clrImg.isVisible = true
     else
         newAnswerArray = newAnswersWorded(nameid)
-        nameCircle.isVisible = true
         nameImg.isVisible = true
-        clrCircle.isVisible = false
         clrImg.isVisible = false
     end
     if lvl == 1 then
@@ -417,8 +411,6 @@ local function gameover(taskLabel, taskLabel2, countLabel, timerText, schtrafLab
     timerText:removeSelf()
     nameImg:removeSelf()
     clrImg:removeSelf()
-    nameCircle:removeSelf()
-    clrCircle:removeSelf()
     schtrafLabel:removeSelf()
     for i = 0,3 do
         answersBlack[i]:removeSelf()
@@ -437,15 +429,15 @@ local function showGOTable()
     saveScores()
     composer.setVariable( "scoresTable", scoresTable )
 
-    gameOverLabel1 = display.newText( sceneGroup, "game", display.contentCenterX, 210, font, 70 )
+    gameOverLabel1 = display.newText( sceneGroup, "GAME", display.contentCenterX, 210, font, 70 )
     gameOverLabel1:setFillColor( 0, 0, 0, 1.0 )
-    gameOverLabel2 = display.newText( sceneGroup, "over", display.contentCenterX, 290, font, 70 )
+    gameOverLabel2 = display.newText( sceneGroup, "OVER", display.contentCenterX, 290, font, 70 )
     gameOverLabel2:setFillColor( 0, 0, 0, 1.0 )
-    gameOverCurr1 = display.newText( sceneGroup, "счет", display.contentCenterX, 430, font, 52 )
+    gameOverCurr1 = display.newText( sceneGroup, "СЧЁТ", display.contentCenterX, 430, font, 52 )
     gameOverCurr1:setFillColor( 0, 0, 0, 1.0 )
     gameOverCurr2 = display.newText( sceneGroup, corrects.." из "..total, display.contentCenterX, 500, font, 52 )
     gameOverCurr2:setFillColor( 0, 0, 0, 1.0 )
-    gameOverHighScore1 = display.newText( sceneGroup, "рекорд", display.contentCenterX, 620, font, 52 )
+    gameOverHighScore1 = display.newText( sceneGroup, "РЕКОРД", display.contentCenterX, 620, font, 52 )
     gameOverHighScore1:setFillColor( 0, 0, 0, 1.0 )
     gameOverHighScore2 = display.newText( sceneGroup, scoresTable[1][1], display.contentCenterX, 690, font, 52 )
     gameOverHighScore2:setFillColor( 0, 0, 0, 1.0 )
@@ -587,8 +579,8 @@ local function setField()
     lvl = 0
     corrects = 0
     total = 0
-	taskLabel2 = display.newText( sceneGroup, "", display.contentCenterX+3, display.contentCenterY - 257, font, taskFontSize )
-	taskLabel = display.newText( sceneGroup, "", display.contentCenterX, display.contentCenterY - 260, font, taskFontSize )
+	taskLabel2 = display.newText( sceneGroup, "", display.contentCenterX+3, 277, font, taskFontSize )
+	taskLabel = display.newText( sceneGroup, "", display.contentCenterX, 280, font, taskFontSize )
 	schtrafLabel = display.newText( sceneGroup, "-1.25", 450, 90, font, timerFontSize+4 )
 	schtrafLabel:setFillColor( 1, 0, 0, 0.0 )
 	timerRect = display.newRect( sceneGroup, 0, 10, display.contentWidth*2, 20 )
@@ -609,19 +601,13 @@ local function setField()
         color2 = { 226/255, 252/255, 241/255, 1 },
         direction = "down"
     }
-    clrCircle = display.newCircle( sceneGroup,display.contentCenterX-70, 120, 45 )
-    clrCircle.fill = paintClr
-    clrImg = display.newImage( sceneGroup, "palette.png", display.contentCenterX-70, 120 )
-    clrImg:scale(0.9, 0.9)
-    clrImg:setFillColor( 0, 0.6 )
-    clrCircle.isVisible = false
+    clrImg = display.newImage( sceneGroup, "palette.png", display.contentCenterX-70, 190 )
+    clrImg:scale(0.7, 0.7)
+    clrImg:setFillColor( 0, 1 )
     clrImg.isVisible = false
-    nameCircle = display.newCircle( sceneGroup,display.contentCenterX+70, 120, 45 )
-    nameCircle.fill = paintName
-    nameImg = display.newImage( sceneGroup, "word.png", display.contentCenterX+70, 120 )
-    nameImg:scale(0.9, 0.9)
-    nameImg:setFillColor( 0, 0.6 )
-    nameCircle.isVisible = false
+    nameImg = display.newImage( sceneGroup, "word.png", display.contentCenterX+70, 190 )
+    nameImg:scale(0.7, 0.7)
+    nameImg:setFillColor( 0, 1 )
     nameImg.isVisible = false
     countDownTimer = timer.performWithDelay( 30, function() updateCountDown(timerRect, timerText, countDownTimer) end, 0 )
 

@@ -15,7 +15,7 @@ local textcolor = {0, 0, 0}
 local outlinecolor = {0, 0, 0, 0.4}
 local correctcolor = {46/255, 139/255, 87/255}
 local wrongcolor = {220/255, 20/255, 60/255}
-local font = "geometos.ttf"
+local font = "altridge.ttf"
 local colors = require("colors")
 local answersBlack = {}
 local answersBlackArray = {}
@@ -354,15 +354,15 @@ local function showGOTable()
     saveScores()
     composer.setVariable( "scoresTable", scoresTable )
 
-    gameOverLabel1 = display.newText( sceneGroup, "game", display.contentCenterX, 210, font, 70 )
+    gameOverLabel1 = display.newText( sceneGroup, "GAME", display.contentCenterX, 210, font, 70 )
     gameOverLabel1:setFillColor( 0, 0, 0, 1.0 )
-    gameOverLabel2 = display.newText( sceneGroup, "over", display.contentCenterX, 290, font, 70 )
+    gameOverLabel2 = display.newText( sceneGroup, "OVER", display.contentCenterX, 290, font, 70 )
     gameOverLabel2:setFillColor( 0, 0, 0, 1.0 )
-    gameOverCurr1 = display.newText( sceneGroup, "счет", display.contentCenterX, 430, font, 52 )
+    gameOverCurr1 = display.newText( sceneGroup, "СЧЁТ", display.contentCenterX, 430, font, 52 )
     gameOverCurr1:setFillColor( 0, 0, 0, 1.0 )
     gameOverCurr2 = display.newText( sceneGroup, corrects.." из "..total, display.contentCenterX, 500, font, 52 )
     gameOverCurr2:setFillColor( 0, 0, 0, 1.0 )
-    gameOverHighScore1 = display.newText( sceneGroup, "рекорд", display.contentCenterX, 620, font, 52 )
+    gameOverHighScore1 = display.newText( sceneGroup, "РЕКОРД", display.contentCenterX, 620, font, 52 )
     gameOverHighScore1:setFillColor( 0, 0, 0, 1.0 )
     gameOverHighScore2 = display.newText( sceneGroup, scoresTable[1][1], display.contentCenterX, 690, font, 52 )
     gameOverHighScore2:setFillColor( 0, 0, 0, 1.0 )
@@ -504,8 +504,8 @@ local function setField()
     lvl = 0
     corrects = 0
     total = 0
-	taskLabel2 = display.newText( sceneGroup, "", display.contentCenterX+3, display.contentCenterY - 297, font, taskFontSize )
-	taskLabel = display.newText( sceneGroup, "", display.contentCenterX, display.contentCenterY - 300, font, taskFontSize )
+	taskLabel2 = display.newText( sceneGroup, "", display.contentCenterX+3, 257, font, taskFontSize )
+	taskLabel = display.newText( sceneGroup, "", display.contentCenterX, 260, font, taskFontSize )
 	schtrafLabel = display.newText( sceneGroup, "-1.25", 450, 90, font, timerFontSize+4 )
 	schtrafLabel:setFillColor( 1, 0, 0, 0.0 )
 	timerRect = display.newRect( sceneGroup, 0, 10, display.contentWidth*2, 20 )

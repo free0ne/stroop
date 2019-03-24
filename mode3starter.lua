@@ -9,7 +9,8 @@ local colorButton = {2/255, 218/255, 197/255}
 local whiteColor = {255/255, 255/255, 255/255}
 local labeltextcolor = {1, 1, 1}
 local textcolor = {0, 0, 0}
-local font = "geometos.ttf"
+--local font = "geometos.ttf"
+local font = "altridge.ttf"
 
 
 
@@ -99,7 +100,7 @@ function scene:create( event )
 	local startLabel1 = display.newText( sceneGroup, "1:1", display.contentCenterX, 200 - 65, font, 40 )
 	startLabel1:setFillColor( unpack(labeltextcolor) )
 	local tutorialLabel1 = display.newText( sceneGroup,
-    	"задания из режимов \"определение цветов\" & \"прочтение слов\"\nровно через раз",
+    	"Задания из режимов \"Определение цветов\" & \"Прочтение слов\"\nровно через раз",
     	display.contentCenterX, 462, display.contentWidth-170, 550, font, 22 )
 	tutorialLabel1:setFillColor( unpack(textcolor) )
 
@@ -108,10 +109,10 @@ function scene:create( event )
 	local startGame2 = display.newRect( sceneGroup, display.contentCenterX, 475 - 65, display.contentWidth-140, 60 )
 	startGame2:setFillColor( unpack (colorButton) )
 	startGame2:addEventListener( "tap", gameStart2 )
-	local startLabel2 = display.newText( sceneGroup, "random", display.contentCenterX, 475 - 65, font, 40 )
+	local startLabel2 = display.newText( sceneGroup, "RANDOM", display.contentCenterX, 475 - 65, font, 40 )
 	startLabel2:setFillColor( unpack(labeltextcolor) )
 	local tutorialLabel2 = display.newText( sceneGroup,
-    	"задания из режимов \"определение цветов\" & \"прочтение слов\"\nв случайном порядке",
+    	"Задания из режимов \"Определение цветов\" & \"Прочтение слов\"\nв случайном порядке",
     	display.contentCenterX, 737, display.contentWidth-170, 550, font, 22 )
 	tutorialLabel2:setFillColor( unpack(textcolor) )
 
@@ -123,13 +124,14 @@ function scene:create( event )
 	local squareGame3 = display.newRect( sceneGroup, display.contentCenterX + 160, 783, 65, 65 )
 	squareGame3:setFillColor( unpack (colorButton) )
 	squareGame3:addEventListener( "tap", hardcoreInfo )
-	local questionGame3 = display.newText( sceneGroup, "?", display.contentCenterX + 163, 783, "BrickShapers.otf", 56 )
+	local questionGame3 = display.newText( sceneGroup, "?", display.contentCenterX + 160, 783, font, 56 )
+	--local questionGame3 = display.newText( sceneGroup, "?", display.contentCenterX + 163, 783, "BrickShapers.otf", 56 )
 	questionGame3:setFillColor( unpack(labeltextcolor) )
 
 	local startLabel3 = display.newText( sceneGroup, "hardcore", display.contentCenterX, 750 - 65, font, 40 )
 	startLabel3:setFillColor( unpack(labeltextcolor) )
 	local tutorialLabel3 = display.newText( sceneGroup,
-    	"обучение окончено,\nможно приступить\nк полноценной игре!",
+    	"Обучение окончено,\nможно приступить\nк полноценной игре!",
     	display.contentCenterX, 1022, display.contentWidth-170, 550, font, 22 )
 	tutorialLabel3:setFillColor( unpack(textcolor) )
 

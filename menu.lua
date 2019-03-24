@@ -72,11 +72,12 @@ function scene:create( event )
   local fontSize = 33
   display.setDefault( "background", unpack( bgcolor ) )
 
-  local font = "geometos.ttf"
+  --local font = "geometos.ttf"
+  local font = "altridge.ttf"
 
   local labelRect = display.newRect( sceneGroup, display.contentCenterX, 65, display.contentWidth, 130 )
   labelRect:setFillColor( unpack (labelrectcolor) )
-  local label = display.newText( sceneGroup, "Stroop effect", display.contentCenterX, 65, font, 48 )
+  local label = display.newText( sceneGroup, "STROOP EFFECT", display.contentCenterX, 65, font, 48 )
   label:setFillColor( unpack(labeltextcolor) )
 
   local bgRect = display.newRect( sceneGroup, display.contentCenterX, display.contentCenterY + 50, display.contentWidth-100, 630 )
@@ -85,19 +86,19 @@ function scene:create( event )
   local mode1Rect = display.newRect( sceneGroup, display.contentCenterX, display.contentCenterY - 150, display.contentWidth-180, 130 )
   mode1Rect:setFillColor( unpack (colorButton) )
   mode1Rect:addEventListener( "tap", goToGame1 )
-  local mode1Label = display.newText( sceneGroup, "определение\nцветов", display.contentCenterX, display.contentCenterY - 150, font, fontSize )
+  local mode1Label = display.newText( sceneGroup, "ОПРЕДЕЛЕНИЕ\nЦВЕТОВ", display.contentCenterX, display.contentCenterY - 150, font, fontSize )
   mode1Label:setFillColor( unpack(labeltextcolor) )
 
   local mode2Rect = display.newRect( sceneGroup, display.contentCenterX, display.contentCenterY + 50, display.contentWidth-180, 130 )
   mode2Rect:setFillColor( unpack (colorButton) )
   mode2Rect:addEventListener( "tap", goToGame2 )
-  local mode2Label = display.newText( sceneGroup, "прочтение\nслов", display.contentCenterX - 32, display.contentCenterY + 50, font, fontSize )
+  local mode2Label = display.newText( sceneGroup, "ПРОЧТЕНИЕ\nСЛОВ", display.contentCenterX - 32, display.contentCenterY + 50, font, fontSize )
   mode2Label:setFillColor( unpack(labeltextcolor) )
 
   local mode3Rect = display.newRect( sceneGroup, display.contentCenterX, display.contentCenterY + 250, display.contentWidth-180, 130 )
   mode3Rect:setFillColor( unpack (colorButton) )
   mode3Rect:addEventListener( "tap", goToGame3 )
-  local mode3Label = display.newText( sceneGroup, "смешанные\nтесты", display.contentCenterX - 14, display.contentCenterY + 250, font, fontSize )
+  local mode3Label = display.newText( sceneGroup, "СМЕШАННЫЕ\nТЕСТЫ", display.contentCenterX - 14, display.contentCenterY + 250, font, fontSize )
   mode3Label:setFillColor( unpack(labeltextcolor) )
 
 end

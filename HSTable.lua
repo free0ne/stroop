@@ -2,7 +2,7 @@
 local composer = require( "composer" )
 
 local scene = composer.newScene()
-local font = "geometos.ttf"
+local font = "altridge.ttf"
 local textcolor = {0, 0, 0}
 -- -----------------------------------------------------------------------------------
 -- Code outside of the scene event functions below will only be executed ONCE unless

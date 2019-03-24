@@ -8,7 +8,8 @@ local bgcolor = {255/255, 255/255, 255/255}
 local colorButton = {2/255, 218/255, 197/255}
 local labeltextcolor = {1, 1, 1}
 local textcolor = {0, 0, 0}
-local font = "geometos.ttf"
+--local font = "geometos.ttf"
+local font = "altridge"
 
 
 
@@ -75,23 +76,23 @@ function scene:create( event )
 -Часть слова-задания (1)
 -Часть слов-вариантов (2)
 
-каждая часть указывает на
+Каждая часть указывает на
 конкретный атрибут (цвет, которым закрашен текст,
-или название цвета)
+или название цвета).
 
-нужно выбрать вариант, при котором совпадут два указанных признака]],
+Нужно выбрать вариант, при котором совпадут два указанных признака.]],
         x = display.contentWidth/2,
         y = 310,
         width = 420,
     	font = font,
-        fontSize = 22,
+        fontSize = 24,
         align = "left"  -- Alignment parameter
     }
 
     local helpText = display.newText( options )
     helpText:setFillColor( 0 )
     sceneGroup:insert(helpText)
-	local startLabel = display.newText( sceneGroup, "ок, поехали!", display.contentCenterX, display.contentCenterY + 370, font, 40 )
+	local startLabel = display.newText( sceneGroup, "ОК, ПОЕХАЛИ!", display.contentCenterX, display.contentCenterY + 370, font, 40 )
 	startLabel:setFillColor( unpack(labeltextcolor) )
 
 	local backRect = display.newRect( sceneGroup, 40, 40, 80, 80 )

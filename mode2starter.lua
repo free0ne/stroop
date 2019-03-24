@@ -8,7 +8,8 @@ local bgcolor = {255/255, 255/255, 255/255}
 local colorButton = {2/255, 218/255, 197/255}
 local labeltextcolor = {1, 1, 1}
 local textcolor = {0, 0, 0}
-local font = "geometos.ttf"
+--local font = "geometos.ttf"
+local font = "altridge.ttf"
 
 
 
@@ -64,14 +65,14 @@ end
 function scene:create( event )
 	local sceneGroup = self.view
 	firstback = true
-	local startGame = display.newRect( sceneGroup, display.contentCenterX, display.contentCenterY + 370, display.contentWidth-140, 130 )
+	local startGame = display.newRect( sceneGroup, display.contentCenterX, display.contentCenterY + 370, display.contentWidth-120, 130 )
 	startGame:setFillColor( unpack (colorButton) )
 	startGame:addEventListener( "tap", gameStart )
 	local tutorialLabel = display.newText( sceneGroup,
-    	"в данном режиме нужно читать слова, указанные в задании, и выбрать цвета, которые они обозначают\n\nвремя: 25 сек\nштраф: -1.25 сек",
+    	"В ДАННОМ РЕЖИМЕ НУЖНО ЧИТАТЬ СЛОВА, УКАЗАННЫЕ В ЗАДАНИИ, И ВЫБРАТЬ ЦВЕТА, КОТОРЫЕ ОНИ ОБОЗНАЧАЮТ\n\nВРЕМЯ: 25 СЕК\nШТРАФ: -1.25 СЕК",
     	display.contentCenterX, display.contentCenterY+15, display.contentWidth-120, 550, font, 35 )
 	tutorialLabel:setFillColor( unpack(textcolor) )
-	local startLabel = display.newText( sceneGroup, "ок, поехали!", display.contentCenterX, display.contentCenterY + 370, font, 40 )
+	local startLabel = display.newText( sceneGroup, "ОК, ПОЕХАЛИ!", display.contentCenterX, display.contentCenterY + 370, font, 40 )
 	startLabel:setFillColor( unpack(labeltextcolor) )
 
 	local backRect = display.newRect( sceneGroup, 40, 40, 80, 80 )
