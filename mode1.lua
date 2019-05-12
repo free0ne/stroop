@@ -2,6 +2,7 @@
 local composer = require( "composer" )
 local widget = require( "widget" )
 local toast = require('plugin.toast')
+local translations = require("translations")
 local scene = composer.newScene()
 
 local sceneGroup
@@ -17,7 +18,7 @@ local correctcolor = {46/255, 139/255, 87/255}
 local wrongcolor = {220/255, 20/255, 60/255}
 --local font = "geometos.ttf"
 local font = "altridge.ttf"
-local colors = require("colors")
+local colors
 local answersBlack = {}
 local answersBlackArray = {}
 local answersColored = {}
@@ -79,7 +80,15 @@ local scoresTable = {}
 local filePath = system.pathForFile( "coloredscores.json", system.DocumentsDirectory )
 local loadScores
 local saveScores
+local isVibro
+local lang
 
+socket = require "socket"
+local startTime
+local totalTime
+local timeout = 100
+local timenum
+local goodtime
 -- -----------------------------------------------------------------------------------
 -- Code outside of the scene event functions below will only be executed ONCE unless
 -- the scene is removed entirely (not recycled) via "composer.removeScene()"
@@ -359,11 +368,11 @@ local function showGOTable()
     gameOverLabel1:setFillColor( 0, 0, 0, 1.0 )
     gameOverLabel2 = display.newText( sceneGroup, "OVER", display.contentCenterX, 290, font, 70 )
     gameOverLabel2:setFillColor( 0, 0, 0, 1.0 )
-    gameOverCurr1 = display.newText( sceneGroup, "СЧЁТ", display.contentCenterX, 430, font, 52 )
+    gameOverCurr1 = display.newText( sceneGroup, translations["score"][lang], display.contentCenterX, 430, font, 52 )
     gameOverCurr1:setFillColor( 0, 0, 0, 1.0 )
-    gameOverCurr2 = display.newText( sceneGroup, corrects.." из "..total, display.contentCenterX, 500, font, 52 )
+    gameOverCurr2 = display.newText( sceneGroup, corrects..translations["of"][lang]..total, display.contentCenterX, 500, font, 52 )
     gameOverCurr2:setFillColor( 0, 0, 0, 1.0 )
-    gameOverHighScore1 = display.newText( sceneGroup, "РЕКОРД", display.contentCenterX, 620, font, 52 )
+    gameOverHighScore1 = display.newText( sceneGroup, translations["highscore"][lang], display.contentCenterX, 620, font, 52 )
     gameOverHighScore1:setFillColor( 0, 0, 0, 1.0 )
     gameOverHighScore2 = display.newText( sceneGroup, scoresTable[1][1], display.contentCenterX, 690, font, 52 )
     gameOverHighScore2:setFillColor( 0, 0, 0, 1.0 )
@@ -374,15 +383,15 @@ local function showGOTable()
     recordsImage = display.newImage( sceneGroup, "list.png", display.contentCenterX + 200, 70 )
     recordsImage:scale(0.8, 0.8)
 
-    restartGame = display.newRect( sceneGroup, display.contentCenterX - 120, display.contentCenterY + 370, 180, 130 )
+    restartGame = display.newRoundedRect( sceneGroup, display.contentCenterX - 120, display.contentHeight - 110, 180, 130, 40 )
     restartGame:setFillColor( unpack (colorButton) )
     restartGame:addEventListener( "tap", restartLevel )
-    restartImage = display.newImage( sceneGroup, "refresh.png", display.contentCenterX - 120, display.contentCenterY + 370 )
+    restartImage = display.newImage( sceneGroup, "refresh.png", display.contentCenterX - 120, display.contentHeight - 110 )
 
-    toMenu = display.newRect( sceneGroup, display.contentCenterX + 120, display.contentCenterY + 370, 180, 130 )
+    toMenu = display.newRoundedRect( sceneGroup, display.contentCenterX + 120, display.contentHeight - 110, 180, 130, 40 )
     toMenu:setFillColor( unpack (colorButton) )
     toMenu:addEventListener( "tap", goToMenu )
-    toMenuImage = display.newImage( sceneGroup, "menu.png", display.contentCenterX + 120, display.contentCenterY + 370 )
+    toMenuImage = display.newImage( sceneGroup, "menu.png", display.contentCenterX + 120, display.contentHeight - 110 )
 
 end
 
@@ -402,8 +411,15 @@ local function removeGOTable()
 end
 
 local function updateCountDown( rect, text, timerCD )
-    timeleft = timeleft - 0.03
+	totalTime = socket.gettime()*1000 - startTime--прошло времени с момента запуска приложеня
+    num = math.floor(totalTime/timeout)--количество прошедших целых периодов размером в timeout
+	if num > goodtime then--если пришло время нового тика
+		goodtime = num--новый тик
+        timeleft = timeleft - 0.1
+	end
+
     local timeDisplay = string.format( "%2.1f", timeleft )
+    --local timeDisplay = string.format( "%2d", timeleft )
     rect.width = (1 - ((basetime - timeleft)/ basetime)) * display.contentWidth * 2
 
     if timeleft <= 0 then
@@ -428,7 +444,7 @@ local function falsch()
 end
 local function schtrafen()
     print ("schtrafen")
-    system.vibrate()
+    if isVibro then system.vibrate() end
     timeleft = timeleft - schtraf
     schtrafLabel:setFillColor( 1, 0, 0, 0.7 )
     schtrafLabel.alpha = 1
@@ -513,9 +529,12 @@ local function setField()
 	timerRect:setFillColor( 0, 0, 0 )
 	countLabel = display.newText( sceneGroup, string.format( "%d / %d", corrects, total), 90, 50, font, timerFontSize-4 )
 	countLabel:setFillColor( 0, 0, 0 )
-    timerText = display.newText( "25.0", 460, 50, font, timerFontSize )
+    timerText = display.newText( basetime, 460, 50, font, timerFontSize )
     timerText:setFillColor( unpack(textcolor) )
-    countDownTimer = timer.performWithDelay( 30, function() updateCountDown(timerRect, timerText, countDownTimer) end, 0 )
+
+    goodtime = -1
+    startTime = socket.gettime()*1000--новая временная метка
+    countDownTimer = timer.performWithDelay( 10, function() updateCountDown(timerRect, timerText, countDownTimer) end, 0 )
 
 	for i = 0,3 do
 		answersBlack[i] = display.newText( sceneGroup, "ответ"..i, display.contentCenterX, 520 + i*90, font, answerSize )
@@ -534,7 +553,8 @@ local function setField()
 		answersColored[i]:addEventListener( "tap", answer )
 	end
 	for i = 0,3 do
-		answersTabs[i] = display.newRect( sceneGroup, display.contentCenterX, 520 + i*90, answerWidth, answerHeight )
+		--answersTabs[i] = display.newRect( sceneGroup, display.contentCenterX, 520 + i*90, answerWidth, answerHeight )
+        answersTabs[i] = display.newRoundedRect( sceneGroup, display.contentCenterX, 520 + i*90, answerWidth, answerHeight, 15 )
 		answersTabs[i].nummer = i
 		answersTabs[i].alias = "tabbed"
 		answersTabs[i].isVisible = false
@@ -561,7 +581,7 @@ local function onKeyEvent( event )
             if firstback == true then
                 firstback = false
                 timer.performWithDelay( 1500, backTimer )
-                toast.show('Нажмите ещё раз, чтобы выйти в меню')
+                toast.show(translations["tap_menu"][lang])
                 return true
             else
                 if isGameOver == false then
@@ -581,6 +601,12 @@ Runtime:addEventListener( "key", onKeyEvent )
 
 -- create()
 function scene:create( event )
+    lang = composer.getVariable( "settingsTable" )[2]
+    if lang == "en" then colors = require("colorsEN")
+    elseif lang == "de" then colors = require("colorsDE")
+    elseif lang == "ru" then colors = require("colorsRU") end
+
+    isVibro = composer.getVariable( "settingsTable" )[1]
 	display.setStatusBar( display.HiddenStatusBar )
 	sceneGroup = self.view
 	-- Code here runs when the scene is first created but has not yet appeared on screen

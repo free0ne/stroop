@@ -92,47 +92,47 @@ function scene:create( event )
 	local buttonHeight = 220
 	local buttonWidth = display.contentWidth-110
 
-	local rectGame1 = display.newRect( sceneGroup, display.contentCenterX, 200, buttonWidth, buttonHeight )
+	local rectGame1 = display.newRect( sceneGroup, display.contentCenterX, display.contentHeight*0.208, buttonWidth, buttonHeight )
 	rectGame1:setFillColor( unpack (whiteColor) )
-	local startGame1 = display.newRect( sceneGroup, display.contentCenterX, 200 - 65, display.contentWidth-140, 60 )
+	local startGame1 = display.newRect( sceneGroup, display.contentCenterX, display.contentHeight*0.208 - 65, display.contentWidth-140, 60 )
 	startGame1:setFillColor( unpack (colorButton) )
 	startGame1:addEventListener( "tap", gameStart1 )
-	local startLabel1 = display.newText( sceneGroup, "1:1", display.contentCenterX, 200 - 65, font, 40 )
+	local startLabel1 = display.newText( sceneGroup, "1:1", display.contentCenterX, display.contentHeight*0.208 - 65, font, 40 )
 	startLabel1:setFillColor( unpack(labeltextcolor) )
 	local tutorialLabel1 = display.newText( sceneGroup,
     	"Задания из режимов \"Определение цветов\" & \"Прочтение слов\"\nровно через раз",
-    	display.contentCenterX, 462, display.contentWidth-170, 550, font, 22 )
+    	display.contentCenterX, display.contentHeight*0.208+262, display.contentWidth-170, 550, font, 22 )
 	tutorialLabel1:setFillColor( unpack(textcolor) )
 
-	local rectGame2 = display.newRect( sceneGroup, display.contentCenterX, 475, buttonWidth, buttonHeight )
+	local rectGame2 = display.newRect( sceneGroup, display.contentCenterX, display.contentHeight*0.495, buttonWidth, buttonHeight )
 	rectGame2:setFillColor( unpack (whiteColor) )
-	local startGame2 = display.newRect( sceneGroup, display.contentCenterX, 475 - 65, display.contentWidth-140, 60 )
+	local startGame2 = display.newRect( sceneGroup, display.contentCenterX, display.contentHeight*0.495 - 65, display.contentWidth-140, 60 )
 	startGame2:setFillColor( unpack (colorButton) )
 	startGame2:addEventListener( "tap", gameStart2 )
-	local startLabel2 = display.newText( sceneGroup, "RANDOM", display.contentCenterX, 475 - 65, font, 40 )
+	local startLabel2 = display.newText( sceneGroup, "RANDOM", display.contentCenterX, display.contentHeight*0.495 - 65, font, 40 )
 	startLabel2:setFillColor( unpack(labeltextcolor) )
 	local tutorialLabel2 = display.newText( sceneGroup,
     	"Задания из режимов \"Определение цветов\" & \"Прочтение слов\"\nв случайном порядке",
-    	display.contentCenterX, 737, display.contentWidth-170, 550, font, 22 )
+    	display.contentCenterX, display.contentHeight*0.495+262, display.contentWidth-170, 550, font, 22 )
 	tutorialLabel2:setFillColor( unpack(textcolor) )
 
-	local rectGame3 = display.newRect( sceneGroup, display.contentCenterX, 750, buttonWidth, buttonHeight )
+	local rectGame3 = display.newRect( sceneGroup, display.contentCenterX, display.contentHeight*0.78125, buttonWidth, buttonHeight )
 	rectGame3:setFillColor( unpack (whiteColor) )
-	local startGame3 = display.newRect( sceneGroup, display.contentCenterX, 750 - 65, display.contentWidth-140, 60 )
+	local startGame3 = display.newRect( sceneGroup, display.contentCenterX, display.contentHeight*0.78125 - 65, display.contentWidth-140, 60 )
 	startGame3:setFillColor( unpack (colorButton) )
 	startGame3:addEventListener( "tap", gameStart3 )
-	local squareGame3 = display.newRect( sceneGroup, display.contentCenterX + 160, 783, 65, 65 )
+	local squareGame3 = display.newRect( sceneGroup, display.contentCenterX + 160, display.contentHeight*0.78125+33, 65, 65 )
 	squareGame3:setFillColor( unpack (colorButton) )
 	squareGame3:addEventListener( "tap", hardcoreInfo )
-	local questionGame3 = display.newText( sceneGroup, "?", display.contentCenterX + 160, 783, font, 56 )
+	local questionGame3 = display.newText( sceneGroup, "?", display.contentCenterX + 160, display.contentHeight*0.78125+33, font, 56 )
 	--local questionGame3 = display.newText( sceneGroup, "?", display.contentCenterX + 163, 783, "BrickShapers.otf", 56 )
 	questionGame3:setFillColor( unpack(labeltextcolor) )
 
-	local startLabel3 = display.newText( sceneGroup, "hardcore", display.contentCenterX, 750 - 65, font, 40 )
+	local startLabel3 = display.newText( sceneGroup, "hardcore", display.contentCenterX, display.contentHeight*0.78125 - 65, font, 40 )
 	startLabel3:setFillColor( unpack(labeltextcolor) )
 	local tutorialLabel3 = display.newText( sceneGroup,
     	"Обучение окончено,\nможно приступить\nк полноценной игре!",
-    	display.contentCenterX, 1022, display.contentWidth-170, 550, font, 22 )
+    	display.contentCenterX, display.contentHeight*0.78125+272, display.contentWidth-170, 550, font, 22 )
 	tutorialLabel3:setFillColor( unpack(textcolor) )
 
 

@@ -1,16 +1,18 @@
 local composer = require( "composer" )
+local translations = require("translations")
+local lang
 local widget = require( "widget" )
 local toast = require('plugin.toast')
 local scene = composer.newScene()
 
 --local firstback = true
-local bgcolor = {255/255, 255/255, 255/255}
+local bgcolor = {235/255, 235/255, 235/255}
 local colorButton = {2/255, 218/255, 197/255}
 local labeltextcolor = {1, 1, 1}
 local textcolor = {0, 0, 0}
+local purColor = {88/255, 2/255, 109/255}
 --local font = "geometos.ttf"
 local font = "altridge"
-
 
 
 display.setStatusBar( display.HiddenStatusBar )
@@ -61,38 +63,49 @@ local function toMenu( event )
 	Runtime:removeEventListener( "key", onKeyEvent )
 	composer.gotoScene( "menu" )
 end
+
+local function openInstruction( event )
+        composer.showOverlay( "instruction" , {
+            isModal = true,
+            effect = "fade",
+            time = 400,
+        } )
+end
 -- create()
 function scene:create( event )
 	local sceneGroup = self.view
+    lang = composer.getVariable( "settingsTable" )[2]
 	firstback = true
-	local startGame = display.newRect( sceneGroup, display.contentCenterX, display.contentCenterY + 370, display.contentWidth-140, 130 )
-	startGame:setFillColor( unpack (colorButton) )
-	startGame:addEventListener( "tap", gameStart )
+
 	local options =
     {
-        text = [[Правила игры
-
-Задание состоит из двух частей:
--Часть слова-задания (1)
--Часть слов-вариантов (2)
-
-Каждая часть указывает на
-конкретный атрибут (цвет, которым закрашен текст,
-или название цвета).
-
-Нужно выбрать вариант, при котором совпадут два указанных признака.]],
+        text = translations["gamerules"][lang],
         x = display.contentWidth/2,
-        y = 310,
+        y = display.contentHeight * 0.323,
         width = 420,
     	font = font,
         fontSize = 24,
         align = "left"  -- Alignment parameter
     }
 
+
+
     local helpText = display.newText( options )
     helpText:setFillColor( 0 )
     sceneGroup:insert(helpText)
-	local startLabel = display.newText( sceneGroup, "ОК, ПОЕХАЛИ!", display.contentCenterX, display.contentCenterY + 370, font, 40 )
+
+
+    local instructionRect = display.newRoundedRect( sceneGroup, display.contentCenterX, display.contentHeight - 280, display.contentWidth-140, 130, 50 )
+	instructionRect:setFillColor( unpack (purColor) )
+	instructionRect:addEventListener( "tap", openInstruction )
+	local instructionLabel = display.newText( sceneGroup, translations["detailed_instructions"][lang], display.contentCenterX, display.contentHeight - 280, font, 40 )
+	instructionLabel:setFillColor( unpack(labeltextcolor) )
+
+
+    local startGame = display.newRoundedRect( sceneGroup, display.contentCenterX, display.contentHeight - 110, display.contentWidth-140, 130, 50 )
+	startGame:setFillColor( unpack (purColor) )
+	startGame:addEventListener( "tap", gameStart )
+	local startLabel = display.newText( sceneGroup, translations["okgo"][lang], display.contentCenterX, display.contentHeight - 110, font, 40 )
 	startLabel:setFillColor( unpack(labeltextcolor) )
 
 	local backRect = display.newRect( sceneGroup, 40, 40, 80, 80 )

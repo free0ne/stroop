@@ -22,18 +22,18 @@ function scene:create( event )
     local sceneGroup = self.view
     -- Code here runs when the scene is first created but has not yet appeared on screen
     local window = display.newRect( sceneGroup, display.contentCenterX,  display.contentCenterY,
-    display.contentWidth, display.contentHeight )
+    display.contentWidth, display.contentHeight+200 )
     window:setFillColor(0.15, 0.8)
     window:addEventListener( "tap", function() composer.hideOverlay( "fade", 400 ) end)
 
     --display.newRoundedRect( sceneGroup, display.contentCenterX, 490, 460, 670, 15 ):setFillColor(0.95)
-    display.newRect( sceneGroup, display.contentCenterX, 490, 460, 720):setFillColor(0.95)
-    display.newCircle( sceneGroup, display.contentCenterX - 230, 130, 25 ):setFillColor( 0.95 )
-    local kreuz = display.newImage( sceneGroup, "close.png", display.contentCenterX - 230, 130 )
-    kreuz:scale(0.65, 0.65)
+    display.newRect( sceneGroup, display.contentCenterX, display.contentCenterY, 460, display.contentHeight*0.75):setFillColor(0.95)
+    display.newCircle( sceneGroup, display.contentCenterX, display.contentHeight*0.875, 35 ):setFillColor( 0.95 )
+    local kreuz = display.newImage( sceneGroup, "close.png", display.contentCenterX, display.contentHeight*0.875  )
+    kreuz:scale(0.8, 0.8)
     kreuz:setFillColor( 0.1 )
 
-    local highScoresHeader = display.newText( sceneGroup, "High Scores", display.contentCenterX, 180, font, 44 )
+    local highScoresHeader = display.newText( sceneGroup, "High Scores", display.contentCenterX, display.contentHeight*0.1875, font, 44 )
     highScoresHeader:setFillColor( unpack(textcolor) )
     local scoreNums = {}
     local scoreValues = {}
@@ -41,11 +41,11 @@ function scene:create( event )
     local scoresTable = composer.getVariable( "scoresTable" )
     for i = 1, #scoresTable do
         if scoresTable[i][1] > 0 then
-            scoreNums[i] = display.newText( sceneGroup, i .. ")", display.contentCenterX-150, 180 + 40 + i * 55, font, 36 )
+            scoreNums[i] = display.newText( sceneGroup, i .. ")", display.contentCenterX-150, display.contentHeight*0.1875 + 40 + i * 55, font, 36 )
             scoreNums[i]:setFillColor( unpack(textcolor) )
-            scoreValues[i] = display.newText( sceneGroup, scoresTable[i][1], display.contentCenterX - 70, 180 + 40 + i * 55, font, 36 )
+            scoreValues[i] = display.newText( sceneGroup, scoresTable[i][1], display.contentCenterX - 70, display.contentHeight*0.1875 + 40 + i * 55, font, 36 )
             scoreValues[i]:setFillColor( unpack(textcolor) )
-            scoreDates[i] = display.newText( sceneGroup, scoresTable[i][2], display.contentCenterX + 80, 180 + 40 + i * 55, font, 36 )
+            scoreDates[i] = display.newText( sceneGroup, scoresTable[i][2], display.contentCenterX + 80, display.contentHeight*0.1875 + 40 + i * 55, font, 36 )
             scoreDates[i]:setFillColor( unpack(textcolor) )
             print(i.." "..scoresTable[i][1])
         end

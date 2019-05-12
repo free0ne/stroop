@@ -1,11 +1,13 @@
 local composer = require( "composer" )
 local widget = require( "widget" )
 local toast = require('plugin.toast')
+local translations = require("translations")
+local lang
 local scene = composer.newScene()
 
 --local firstback = true
-local bgcolor = {255/255, 255/255, 255/255}
-local colorButton = {2/255, 218/255, 197/255}
+local bgcolor = {235/255, 235/255, 235/255}
+local colorButton = {120/255, 0/255, 64/255}
 local labeltextcolor = {1, 1, 1}
 local textcolor = {0, 0, 0}
 --local font = "geometos.ttf"
@@ -40,7 +42,7 @@ local function onKeyEvent( event )
 			--	return true
 			--else
 			--	firstback = true
-				composer.gotoScene( "menu" )
+				composer.gotoScene( "tutorials" )
 			--	return true
 			--end
 
@@ -59,20 +61,21 @@ end
 
 local function toMenu( event )
 	Runtime:removeEventListener( "key", onKeyEvent )
-	composer.gotoScene( "menu" )
+	composer.gotoScene( "tutorials" )
 end
 -- create()
 function scene:create( event )
 	local sceneGroup = self.view
+	lang = composer.getVariable( "settingsTable" )[2]
 	firstback = true
-	local startGame = display.newRect( sceneGroup, display.contentCenterX, display.contentCenterY + 370, display.contentWidth-120, 130 )
+	local startGame = display.newRoundedRect( sceneGroup, display.contentCenterX, display.contentHeight - 110, display.contentWidth-120, 130, 50 )
 	startGame:setFillColor( unpack (colorButton) )
 	startGame:addEventListener( "tap", gameStart )
 	local tutorialLabel = display.newText( sceneGroup,
-    	"В ДАННОМ РЕЖИМЕ НУЖНО ЧИТАТЬ СЛОВА, УКАЗАННЫЕ В ЗАДАНИИ, И ВЫБРАТЬ ЦВЕТА, КОТОРЫЕ ОНИ ОБОЗНАЧАЮТ\n\nВРЕМЯ: 25 СЕК\nШТРАФ: -1.25 СЕК",
+    	translations["word_tutorial"][lang],
     	display.contentCenterX, display.contentCenterY+15, display.contentWidth-120, 550, font, 35 )
 	tutorialLabel:setFillColor( unpack(textcolor) )
-	local startLabel = display.newText( sceneGroup, "ОК, ПОЕХАЛИ!", display.contentCenterX, display.contentCenterY + 370, font, 40 )
+	local startLabel = display.newText( sceneGroup, translations["okgo"][lang], display.contentCenterX, display.contentHeight - 110, font, 40 )
 	startLabel:setFillColor( unpack(labeltextcolor) )
 
 	local backRect = display.newRect( sceneGroup, 40, 40, 80, 80 )
